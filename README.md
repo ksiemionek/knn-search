@@ -6,9 +6,6 @@ Python + Rust app for kNN search. `main.py` example uses `BAAI/bge-large-en-v1.5
 
 ```bash
 uv venv
-source .venv/bin/activate  # Linux/macOS
-.venv\Scripts\activate     # Windows
-
 uv sync
 maturin develop --release
 ```
@@ -19,13 +16,12 @@ maturin develop --release
 python main.py
 ```
 
-
 ## Example output
 
 ```
 Unique contexts: 18891
-Loading weights: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 199/199 [00:00<00:00, 15284.13it/s]
-Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 591/591 [00:59<00:00,  9.88it/s]
+Loading weights: 100%|████████████████████████████████████| 199/199 [00:00<00:00, 15284.13it/s]
+Batches: 100%|███████████████████████████████████████████████| 591/591 [00:59<00:00,  9.88it/s]
 Query: How many square miles is Oklahoma City?
 
 Top 5 similar contexts (Rust):
