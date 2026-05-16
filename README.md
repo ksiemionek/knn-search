@@ -1,6 +1,6 @@
 # knn-search
 
-Python + Rust app for kNN search. `main.py` example uses `BAAI/bge-large-en-v1.5` model to encode `rajpurkar/squad` dataset, then finds the most similar contexts using cosine similarity, compares Rust and Python performance.
+Python + Rust app for kNN search. `main.py` example uses `BAAI/bge-small-en-v1.5` model to encode `rajpurkar/squad` dataset, then finds the most similar contexts using cosine similarity, compares Rust and Python performance.
 
 ## Setup
 
