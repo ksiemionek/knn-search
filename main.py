@@ -43,11 +43,11 @@ def main():
 
     print(f"Top {top_k} similar contexts (Rust):")
     for idx, sim in results_rust:
-        print(f"- sim: {sim:.4f} | {unique_contexts[idx][:150]}...")
+        print(f"- similarity: {sim:.4f} | {unique_contexts[idx]}")
 
     print(f"\nTop {top_k} similar contexts (Python):")
     for idx, sim in results_py:
-        print(f"- sim: {sim:.4f} | {unique_contexts[idx][:150]}...")
+        print(f"- similarity: {sim:.4f} | {unique_contexts[idx]}")
 
     print(f"\nRust time: {time_rust:.4f}s")
     print(f"Python time: {time_py:.4f}s")
