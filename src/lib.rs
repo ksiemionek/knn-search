@@ -33,14 +33,32 @@ mod knn_search {
     vectors: Vec<Vec<f64>>,
     topk: usize,
   ) -> PyResult<Vec<(usize, f64)>> {
-    let mut results: Vec<(usize, f64)> = vectors
-      .par_iter()
-      .enumerate()
-      .map(|(idx, vec)| (idx, cosine_similarity(&query, vec)))
-      .collect();
+    let num_threads = rayon::current_num_threads();
+    let chunk_size = vectors.len().div_ceil(num_threads);
 
-    results.sort_unstable_by(|a, b| b.1.partial_cmp(&a.1).unwrap());
-    results.truncate(topk);
+    let results: Vec<(usize, f64)> = vectors
+      .par_chunks(chunk_size)
+      .enumerate()
+      .map(|(chunk_idx, chunk)| {
+        let offset = chunk_idx * chunk_size;
+        let mut local_results: Vec<(usize, f64)> = chunk
+          .iter()
+          .enumerate()
+          .map(|(idx, vec)| (offset + idx, cosine_similarity(&query, vec)))
+          .collect();
+        local_results.sort_by(|a, b| b.1.total_cmp(&a.1));
+        local_results.truncate(topk);
+        local_results
+      })
+      .reduce(
+        || vec![],
+        |mut left, mut right| {
+          left.append(&mut right);
+          left.sort_by(|a, b| b.1.total_cmp(&a.1));
+          left.truncate(topk);
+          left
+        },
+      );
 
     Ok(results)
   }
